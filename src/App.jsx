@@ -1,6 +1,9 @@
+import {Header} from '@/components/header/header.jsx'
+import '@/style.css'
+
 const App = ()=>{
   return(
-    <h1>Design System</h1>
+    <Header/>
   )
 };
 export default App;

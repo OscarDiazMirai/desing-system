@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+:root {
+    --primary: #EE293A;
+    --primary-hover: #D6393E;
+    --secondary: #bfbaba;
+    --secondary-hover: #5F5C4F;
+    --bg_color_light: #d2e0ff50;
+    font-family: 'Montserrat';
+}
