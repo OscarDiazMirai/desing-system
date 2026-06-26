@@ -1,14 +1,16 @@
 import logo from '@/../public/logo.webp'
 
-export const Header = ()=>{
+const Header = ()=>{
     return (
-        <header>
+        <header className='p-5'>
             <div className="content flex items-center gap-4">
             <div className="logo">
-                <img src={logo} alt="Logo Mirai" className='w-56'/>
+                <img src={logo} alt="Logo Mirai" className='w-32'/>
                 </div>                
-            <h1 className='heading text-4xl font-medium'>Design system</h1>
+            <h1 className='heading text-3xl font-medium self-end'>Design system</h1>
             </div>
         </header>        
     )
 };
+
+export default Header;
