@@ -1,8 +1,4 @@
-import {elementorKit} from '@/core/core.js'
-
 const CardContent = ({title, subtitle, content}) => {
-    console.log('[REACT]', elementorKit())
-
     return (
         <details>
             <summary>
