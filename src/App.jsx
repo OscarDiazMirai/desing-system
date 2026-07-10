@@ -1,11 +1,11 @@
 import Header from '@/layouts/header/Header.jsx'
 import Main from '@/layouts/main/Main.jsx'
 import '@/style.css'
-import {useCreateStylesSheetsCSS} from '@/core/core.js'
+import {useGetDataFromServiceWorker} from '@/core/core.js'
 
 const App = ()=>{
   // Initialises communication with the extension and injects the three style sheets
-  useCreateStylesSheetsCSS(); 
+  useGetDataFromServiceWorker(); 
 
   return(
     <>
