@@ -7,7 +7,7 @@ const Header = ()=>{
             <div className="logo">
                 <img src={logo} alt="Logo Mirai" className='w-32'/>
                 </div>                
-            <h1 className='heading text-3xl font-medium self-end'>Design system</h1>
+            <h1 className='heading text-3xl font-medium self-end'>Title</h1>
             </div>
         </header>        
     )

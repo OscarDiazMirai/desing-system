@@ -1,7 +1,11 @@
+import { useContext } from 'react';
 import CardContent from '@/layouts/card-content/Card.jsx'
 import { SpaceScale } from '@/components/system-spaces/Space-scale.jsx'
+// import DataStylesContext from '@/context/contex.js'
 
 const Main = () => {
+    // const context = useContext(DataStylesContext);
+    // console.log('context from Main',context)
     return (
         <main className="p-5">
             <CardContent title='title h2' subtitle='Subtitle h3' content='Content text'>
