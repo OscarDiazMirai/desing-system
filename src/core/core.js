@@ -1,5 +1,9 @@
-// archivo: core.js
 import { useEffect } from 'react';
+// import DataStylesContext from '@/context/contex.js';
+
+
+// const{elementorKit, elementorKitId, engineCSS, styleCSS} = useContext(DataStylesContext);
+
 
 // Creates the <style> tags based on the information from the service worker
 export const useGetDataFromServiceWorker = () => {
@@ -8,7 +12,8 @@ export const useGetDataFromServiceWorker = () => {
       if (event.data && event.data.origin === "FROM_CONTENT_SCRIPT") {
         console.log("¡SUCCESSFULL!", event.data);
 
-        const { elementorKit, styleCSS, engineCSS } = event.data;
+        // Destructuring data
+        const { elementorKit, styleCSS, engineCSS, elementorKitId } = event.data;
 
         // We create and inject the stylesheet for Elementor Kit
         createCssStyleTag("elementor-kit", elementorKit);
@@ -20,7 +25,10 @@ export const useGetDataFromServiceWorker = () => {
         createCssStyleTag("engine-css", engineCSS);
 
         // Add to body class with elementor-kit-ID
-        addElementorKitIdClass(event.data.elementorKitId);
+        addElementorKitIdClass(elementorKitId);
+
+        // Elementor kit
+        getListOfVariables(`elementor-kit-${elementorKitId}`, elementorKit)
       }
     };
     // Get data from source web
@@ -49,8 +57,8 @@ const createCssStyleTag = (id, contentCss) => {
     elementStyle.id = id;
     document.head.appendChild(elementStyle);
 
-    // Get DOM elements to insert <style> CSS
-    /* const contentElementorKit = document.querySelector('.content_elementor_kit');
+    /* // Get DOM elements to insert <style> CSS
+    const contentElementorKit = document.querySelector('.content_elementor_kit');
     const contentStyleCss = document.querySelector('.content_style_css');
     const contentEngineCss = document.querySelector('.content_engine_css');
 
@@ -68,9 +76,9 @@ const createCssStyleTag = (id, contentCss) => {
       default:
         document.head.appendChild(elementStyle);
         break;
-    } */
-    // console.log('contentElementorKit', contentElementorKit, id)
-    // console.log('createCssStyleTag')
+    }
+    console.log('contentElementorKit', contentElementorKit, id)
+    console.log('createCssStyleTag') */
   }
 
   // We apply the CSS in plain text format received from the extension
@@ -81,7 +89,30 @@ const createCssStyleTag = (id, contentCss) => {
 // Add elementor-kit-ID class to use its variables and classes
 const addElementorKitIdClass = (id) => {
   if (!document.body) return;
+  // document.body.classList.add(`elementor-kit-${id}`)
   // const main = document.querySelector('main');
-  // const contentElementorKit = document.querySelector('.content_elementor_kit > .content');
-  document.body.classList.add(`elementor-kit-${id}`)
+  const contentElementorKit = document.querySelector('.content_elementor_kit > .content');
+  contentElementorKit.classList.add(`elementor-kit-${id}`)
+};
+
+const getListOfVariables = (selector, source) => {
+  // Create regex with dinamic selector
+  const regexSelector = selector + "\\s*\\{([^}]+)\\}";
+  // Create complete regex
+  const regex = new RegExp(regexSelector);
+  // Search for matches
+  const match = source.match(regex);
+  if (!match) {
+    console.log("Selector not found");
+    return null;
+  }
+  // Filtered data from regex array
+  const cleanData = match[1];
+  console.log(cleanData)
+  // Variables regex
+  const regexVariables = /--e-global-[\w-]+\s*:\s*([^;}\n]+)/g
+  // Variables filtered
+  const variables = cleanData.match(regexVariables)
+  console.log(variables, variables.length)
+
 };
