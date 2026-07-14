@@ -1,15 +1,18 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import ServiceWorkerDataProvider from '@/context/provider.jsx';
 import App from './App'
 
 const root = document.getElementById('root');
 
-if(!root){
+if (!root) {
   console.error('Root element not found in DOM');
-}else{
+} else {
   createRoot(root).render(
     <StrictMode>
-    <App />
+      <ServiceWorkerDataProvider>
+        <App />
+      </ServiceWorkerDataProvider>
     </StrictMode>
   );
 }
