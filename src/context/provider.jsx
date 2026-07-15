@@ -6,10 +6,8 @@ const ServiceWorkerDataProvider = ({children}) => {
 
     useEffect(() => {
         const getData = (event) => {
-            if (event.data && event.data.origin === "FROM_CONTENT_SCRIPT") {
+            if (!event.data || event.data.origin !== "FROM_CONTENT_SCRIPT") {
                 setData(event.data)
-            }else{
-                console.log('Error receiving data from the work service')
             }
         };
         // Get data from source web
