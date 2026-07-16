@@ -1,8 +1,12 @@
-import {useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 // Get list of variables from selector style
 const useGetVariables = (cssSelector, cssContent) => {
-    const[variablesList, setVariablesList] = useState([]);
+    // Define initial state
+    const [dataPayload, setDataPayload] = useState({
+        allVariables: [],
+        coloursVariables: [],
+    });
 
     useEffect(() => {
         if (!cssSelector || !cssContent) {
@@ -22,15 +26,36 @@ const useGetVariables = (cssSelector, cssContent) => {
         // Filtered data from regex array
         const cleanData = match[1];
         // Variables regex
-        const regexVariables = /--e-global-[\w-]+\s*:\s*([^;}\n]+)/g
+        const regexVariables = /--e-global-[\w-]+\s*:\s*([^;}\n]+;)/g
         // Variables filtered
         const variables = cleanData.match(regexVariables);
+
+        // Control empty variables
+        if (!variables) {
+            console.log("No variables found in selector");
+            setDataPayload({ allVariables: [], coloursVariables: [] });
+            return;
+        }
+
         // Set variables data
-        setVariablesList(variables)
+        setDataPayload({
+            allVariables: variables,
+            coloursVariables: filterColoursVariables(variables) //Filter colours variables
+        });
+
 
     }, [cssSelector, cssContent]);
-    console.log('variablesList', variablesList, variablesList.length)
-    return variablesList
+    console.log('dataPayload', dataPayload)
+    return dataPayload
 };
 
 export default useGetVariables
+
+// Filter colour variables
+function filterColoursVariables(arrVariablesList) {
+    // Colour regex
+    const colourRegex = /^--e-global-color-/;
+    // Filter data
+    const filterColourVariables = arrVariablesList.filter(variable => colourRegex.test(variable));
+    return filterColourVariables;
+};
