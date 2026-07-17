@@ -1,6 +1,6 @@
-const Accordion = ({title, subtitle, children}) => {
+const Details = ({title, subtitle, children}) => {
     return (
-        <details>
+        <details open>
             <summary>
                 <h2>{title}</h2>
                 <h3>{subtitle}</h3>
@@ -12,4 +12,4 @@ const Accordion = ({title, subtitle, children}) => {
     )
 };
 
-export default Accordion;
+export default Details;
