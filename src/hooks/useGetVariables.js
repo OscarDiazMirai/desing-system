@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 // Get list of variables from selector style
 const useGetVariables = (cssSelector, cssContent) => {
     // Define initial state
-    const [dataPayload, setDataPayload] = useState({
+    const [payload, setPayload] = useState({
         allVariables: [],
         coloursVariables: [],
     });
@@ -33,20 +33,20 @@ const useGetVariables = (cssSelector, cssContent) => {
         // Control empty variables
         if (!variables) {
             console.log("No variables found in selector");
-            setDataPayload({ allVariables: [], coloursVariables: [] });
+            setPayload({ allVariables: [], coloursVariables: [] });
             return;
         }
 
         // Set variables data
-        setDataPayload({
+        setPayload({
             allVariables: variables,
             coloursVariables: filterColoursVariables(variables) //Filter colours variables
         });
 
 
     }, [cssSelector, cssContent]);
-    console.log('dataPayload', dataPayload)
-    return dataPayload
+    // console.log('dataPayload', payload)
+    return payload
 };
 
 export default useGetVariables
