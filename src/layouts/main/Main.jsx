@@ -1,11 +1,17 @@
 import { useContext } from 'react';
+
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 import DataStylesContext from '@/context/contex.js'
-import Accordion from '@/layouts/accordion/Accordion.jsx'
 import { SpaceScale } from '@/components/system-spaces/Space-scale.jsx'
 import Section from '@/layouts/section/Section.jsx';
 import useGetVariables from '@/hooks/useGetVariables.js';
 import Button from '@/components/buttons/button.jsx';
-import {splitVariableCss} from '@/utils/splitVariable.js'
+import { splitVariableCss } from '@/utils/splitVariable.js'
 
 const Main = () => {
     // Use data from service worker context
@@ -14,48 +20,35 @@ const Main = () => {
 
     // Get filtered list of variables from elementor kit styles
     const colours = useGetVariables(`elementor-kit-${elementorKitId}`, elementorKit);
-    const {coloursVariables} = colours;
+    const { coloursVariables } = colours;
 
-    // Split colours variables in property and value
-    coloursVariables.map(item=>{
-        const splitData = splitVariableCss(item)
-        console.log('splitData', splitData)
-    })
-    
-    
     return (
         <main className="p-5">
-            <Section sectionType='elementor_kit'>
-                <Accordion title='Sistema de color' subtitle='Paleta'>
-                    {/* Loop through the colours variables array */}
-                    {coloursVariables.map((item, index)=>(
-                    
-                        <Button key={index} color={item}/>
-                    ))}
+            <Section sectionType='elementor_kit_css'>
+                <Accordion>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls={`elementor_kit_${elementorKitId}`}
+                        id={`elementor_kit_${elementorKitId}`}
+                    >
+                        <Typography component="span">Sistema de color</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails className='grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4'>
+                        {/* Loop through the colours variables array */}
+                        {coloursVariables.map((item) => {
+                            // Split colours variables in property and value
+                            const { propertyName, value } = splitVariableCss(item);
+                            // Return each component with property and value
+                            return (
+                                <Button key={propertyName} propertyName={propertyName} colorValue={value}>
+                                    {propertyName}
+                                </Button>
+                            )
+
+                        })}
+                    </AccordionDetails>
                 </Accordion>
             </Section>
-
-            <div className="content_test flex justify-around">
-                <section className="content_elementor_kit">
-                    <div className="content">
-                        <h1 class="heading text-3xl font-medium self-end">Elementor kit</h1>
-                        <button class="elementor-button">Elementor kit</button>
-                        <a class="elementor-button">Elementor kit</a>
-                    </div>
-                </section>
-                <section className="content_style_css">
-                    <div className="content">
-                        <h1 class="heading text-3xl font-medium self-end">Style css</h1>
-                        <button class="elementor-button">Style css</button>
-                    </div>
-                </section>
-                <section className="content_engine_css">
-                    <div className="content">
-                        <h1 class="heading text-3xl font-medium self-end">Engine css</h1>
-                        <button class="elementor-button">Engine css</button>
-                    </div>
-                </section>
-            </div>
         </main>);
 };
 
