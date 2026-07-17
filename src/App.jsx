@@ -8,13 +8,13 @@ import useBodyClass from '@/hooks/useBodyClass.js'
 import useGetVariables from '@/hooks/useGetVariables.js'
 
 const App = () => {
-  // Use context
+  // Use data from service worker context
   const context = useContext(DataStylesContext);
   const { elementorKit, elementorKitId, engineCSS, styleCSS } = context;
 
   // Add elementor kid Id class to body
   useBodyClass(elementorKitId);
-  // Get list of variables from elementor kit styles
+  // Get filtered list of variables from elementor kit styles
   useGetVariables(`elementor-kit-${elementorKitId}`, elementorKit);
 
 

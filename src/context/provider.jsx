@@ -7,8 +7,10 @@ const ServiceWorkerDataProvider = ({children}) => {
     useEffect(() => {
         const getData = (event) => {
             if (!event.data || event.data.origin !== "FROM_CONTENT_SCRIPT") {
-                setData(event.data)
+                return null;
             }
+            console.log(event.data)
+            setData(event.data)
         };
         // Get data from source web
         window.addEventListener("message", getData);
