@@ -1,8 +1,7 @@
-const Button = ({propertyName, colorValue})=>{
+const Button = ({...props})=>{
     return(
-        <button style={{backgroundColor:`var(${propertyName})`}}>
-            <span>{propertyName}</span>
-            <span>{colorValue}</span>
+        <button {...props}>
+            {props.children}
         </button>
     );
 };
