@@ -8,3 +8,8 @@
     --bg_color_light: #d2e0ff50;
     font-family: 'Montserrat';
 }
+
+#root {
+    width: clamp(300px, 1200px, 100%);
+    margin: 0 auto;
+}
