@@ -12,6 +12,7 @@ import Section from '@/layouts/section/Section.jsx';
 import useGetVariables from '@/hooks/useGetVariables.js';
 import Button from '@/components/buttons/button.jsx';
 import { splitVariableCss } from '@/utils/splitVariable.js'
+import Card from '@/components/card/Card.jsx'
 
 const Main = () => {
     // Use data from service worker context
@@ -25,7 +26,7 @@ const Main = () => {
     return (
         <main className="p-5">
             <Section sectionType='elementor_kit_css'>
-                <Accordion>
+                <Accordion defaultExpanded>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls={`elementor_kit_${elementorKitId}`}
@@ -40,9 +41,18 @@ const Main = () => {
                             const { propertyName, value } = splitVariableCss(item);
                             // Return each component with property and value
                             return (
-                                <Button key={propertyName} propertyName={propertyName} colorValue={value}>
-                                    {propertyName}
-                                </Button>
+                                <Card classname={`card elementor_kit_${elementorKitId} p-[16px] border border-[color:var(--primary)] rounded-[8px]`}>
+                                    <div className="wrapper_button flex items-center justify-between gap-[16px]">
+                                        <Button key={propertyName} style={propertyName ? { backgroundColor: `var(${propertyName})` } : {}} className="button button_color w-[40px] h-[40px] rounded-[50px]">
+                                        </Button>
+                                        <div className="inner_content text-[14px] w-[100px]">
+                                            <span>{propertyName}</span>
+                                        </div>
+                                        <Button key={propertyName} className="button button_value text-[16px] w-[auto]">
+                                            <strong>{value}</strong>
+                                        </Button>
+                                    </div>
+                                </Card>
                             )
 
                         })}
