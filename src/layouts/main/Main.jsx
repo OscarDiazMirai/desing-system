@@ -12,7 +12,6 @@ import Button from '@/components/buttons/button.jsx';
 import Section from '@/layouts/section/Section.jsx';
 import Card from '@/components/card/Card.jsx'
 import useGetVariables from '@/hooks/useGetVariables.js';
-import useCopyClipboard from '@/hooks/useCopyClipboard.js';
 import { splitVariableCss } from '@/utils/splitVariable.js'
 
 const Main = () => {
@@ -23,9 +22,6 @@ const Main = () => {
     // Get filtered list of variables from elementor kit styles
     const colours = useGetVariables(`elementor-kit-${elementorKitId}`, elementorKit);
     const { coloursVariables } = colours;
-
-    // Hook copy to clipboard
-     const { displayText, copy } = useCopyClipboard();
 
     return (
         <main className="p-5">
@@ -43,18 +39,10 @@ const Main = () => {
                         {coloursVariables.map((item) => {
                             // Split colours variables in property and value
                             const { propertyName, value } = splitVariableCss(item);
+
                             // Return each component with property and value
                             return (
-                                <Card classname={`card elementor_kit_${elementorKitId} p-[16px] border border-[color:var(--primary)] rounded-[8px] content-center`}>
-                                    <div className="wrapper_button flex items-center justify-between gap-[16px]">
-                                        <Button key={propertyName} style={propertyName ? { backgroundColor: `var(${propertyName})` } : {}} className="button button_color w-[40px] h-[40px] rounded-[50px] cursor-pointer to_copy shadow-[0_0_8px_0_var(--corporative-color)]">
-                                        </Button>
-                                        <div className="inner_content text-[14px] w-[100px]">
-                                            <span>{propertyName}</span>
-                                        </div>
-                                        <Button onClick={(e)=>copy(e)} key={propertyName} data-id={`${propertyName}_${value}`} className="button button_value text-[16px] w-[auto] border border-[color:var(--secondary)] cursor-pointer font-bold p-[8px] rounded-[4px]">{displayText ?? value}</Button>
-                                    </div>
-                                </Card>
+                                <Card key={`${propertyName}_${value}`} dataId={`${propertyName}_${value}`} classname={`card elementor_kit_${elementorKitId} p-[16px] border border-[color:var(--primary)] rounded-[8px] content-center`} item={item} elementorKitId={elementorKitId} />
                             )
 
                         })}
